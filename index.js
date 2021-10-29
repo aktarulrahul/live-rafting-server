@@ -24,7 +24,6 @@ async function mongodbCURD() {
      checking connection with DB
     ------------------------------------- */
     await client.connect();
-    console.log('db connected');
     /* ------------------------------------- 
     database name and collection init
     ------------------------------------- */
@@ -100,7 +99,6 @@ async function mongodbCURD() {
     app.put('/update/:id', async (req, res) => {
       const id = req.params.id;
       const updatedStatus = req.body.status;
-      // console.log(updatedStatus);
       const query = { _id: ObjectId(id) };
       const result = await bookingCollection.updateOne(query, {
         $set: { status: updatedStatus },
