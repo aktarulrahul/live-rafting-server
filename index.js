@@ -97,12 +97,23 @@ async function mongodbCURD() {
     /* ------------------------------------- 
     Update Single Booking Status API
     ------------------------------------- */
+    app.put('/update/:id', async (req, res) => {
+      const id = req.params.id;
+      const updatedStatus = req.body.status;
+      // console.log(updatedStatus);
+      const query = { _id: ObjectId(id) };
+      const result = await bookingCollection.updateOne(query, {
+        $set: { status: updatedStatus },
+      });
+      res.json(result);
+    });
     /* ------------------------------------- 
     GET All Users with Camp Booking API
     ------------------------------------- */
-    app.get('/booking/:email', async (req, res) => {
+    app.get('/booking/user/:email', async (req, res) => {
       const email = req.params.email;
       const query = { email: email };
+
       const cursor = bookingCollection.find(query);
       const userBookings = await cursor.toArray();
       res.send(userBookings);
